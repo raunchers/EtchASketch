@@ -10,14 +10,28 @@
             --rowNum: 10;
             --colNum: 10;
         }
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #666261;
+        }
+        .reset, .randoColor{
+            height: 25px;
+            font-size: 15px;
+            border-radius: 6px;
+        }
+        .header{
+            display: grid;
+            grid-template: repeat(1, 1fr) / repeat(2, 1fr);
+            grid-gap: 10px;
+            margin-bottom: 5px;
+        }
         .container{
-            clear: both;
-            float: left;
             display: grid;
             grid-template: repeat(var(--rowNum), 1fr) / repeat(var(--colNum), 1fr);
-            border-style: solid;
-            width: 75vh;
-            height: 75vh;
+            width: 85vh;
+            height: 85vh;
         }
         .box{
             border-style: solid;
@@ -26,7 +40,10 @@
     </style>
 </head>
 <body>
-    <button class="reset">Clear</button>
+    <div class="header">
+        <button class="reset">New Board</button>
+        <button class="randoColor">Random Colors</button>
+    </div>
     <div class='container'>
     </div>
     <script>
