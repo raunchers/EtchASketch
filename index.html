@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        :root{
+            --rowNum: 10;
+            --colNum: 10;
+        }
+        .container{
+            clear: both;
+            float: left;
+            display: grid;
+            grid-template: repeat(var(--rowNum), 1fr) / repeat(var(--colNum), 1fr);
+            border-style: solid;
+            width: 75vh;
+            height: 75vh;
+        }
+        .box{
+            border-style: solid;
+            border-width: 2px;
+        }
+    </style>
+</head>
+<body>
+    <button class="reset">Clear</button>
+    <div class='container'>
+    </div>
+    <script>
+        //Select clear bttn
+        const clearButton = document.querySelector('.reset');
+        //Attach event listener for clicking of button
+        //Prompts user to enter number of suqares poer side of board
+        clearButton.addEventListener('click', clearGrid);
+
+        //Select container
+        const container = document.querySelector('.container');
+        //Var to hold total number of boxes (100 boxes = 10x10 grid of boxes)
+        var gridSize = 5;
+        createGrid(gridSize);
+
+        function clearGrid(){
+            //remove current grid
+            removeGrid(gridSize);
+
+            //Get new size
+            gridSize = prompt('Enter number of squares per side: ', 25);
+            gridSize = parseInt(gridSize);
+            createGrid(gridSize);
+        }
+
+        function createGrid(size){
+            for(let counter = 0; counter < Math.pow(size, 2); counter++){
+                let box = document.createElement('div');
+                box.classList.add('box');
+                container.appendChild(box);
+                box.addEventListener('mouseenter', function(e){
+                e.target.style.backgroundColor = 'blue';
+                });
+            }
+            //Set number of columns and rows
+            document.documentElement.style.setProperty('--rowNum', gridSize);
+            document.documentElement.style.setProperty('--colNum', gridSize);
+        }
+
+        function removeGrid(size){
+            while(container.hasChildNodes()){
+                container.removeChild(container.firstChild);
+            }
+        }
+
+    </script>
+</body>
+</html>
