@@ -53,6 +53,10 @@
         //Prompts user to enter number of suqares poer side of board
         clearButton.addEventListener('click', clearGrid);
 
+        //Add event listener to random color button
+        const colorRando = document.querySelector('.randoColor');
+        colorRando.addEventListener('click', removeGrid);
+
         //Select container
         const container = document.querySelector('.container');
         //Var to hold total number of boxes (100 boxes = 10x10 grid of boxes)
@@ -60,8 +64,10 @@
         createGrid(gridSize);
 
         function clearGrid(){
-            //remove current grid
-            removeGrid(gridSize);
+            //Remove current grid to attach new event listeners
+            while(container.hasChildNodes()){
+                container.removeChild(container.firstChild);
+            }
 
             //Get new size
             gridSize = prompt('Enter number of squares per side: ', 25);
@@ -75,7 +81,7 @@
                 box.classList.add('box');
                 container.appendChild(box);
                 box.addEventListener('mouseenter', function(e){
-                e.target.style.backgroundColor = 'blue';
+                    e.target.style.backgroundColor = 'Blue';
                 });
             }
             //Set number of columns and rows
@@ -83,9 +89,27 @@
             document.documentElement.style.setProperty('--colNum', gridSize);
         }
 
-        function removeGrid(size){
+        function removeGrid(){
+            //Remove current grid to attach new event listeners
             while(container.hasChildNodes()){
                 container.removeChild(container.firstChild);
+            }
+            //Recreate grid that was already defined
+            randoColorGrid(gridSize);
+        }
+
+        function randoColorGrid(size){
+            //Array holding multiple colors 
+            let colorChoices = ['Blue', 'Red', 'Green', 'Orange', 'Violet', 'SlateBlue', 'DeepPink', 'DarkViolet'];
+            
+            for(let counter = 0; counter < Math.pow(size, 2); counter++){
+                let box = document.createElement('div');
+                box.classList.add('box');
+                container.appendChild(box);
+                box.addEventListener('mouseenter', function(e){
+                    //Random select color
+                    e.target.style.backgroundColor = colorChoices[Math.floor(Math.random() * 8)];
+                });
             }
         }
 
